@@ -6,7 +6,8 @@ using UnityEngine;
 public class PickableObject : MonoBehaviour
 {
     public bool notCentered = false;
-    private GameObject emptyParentObject;
+
+    private static float repulsionForce = 1f;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class PickableObject : MonoBehaviour
     {
         if (other.tag == "PlayerPush")
         {
-            this.GetComponent<Rigidbody>().AddForce(Vector3.ProjectOnPlane((this.transform.position - other.transform.position).normalized, Vector3.up) * 1f, ForceMode.Impulse);
+            this.GetComponent<Rigidbody>().AddForce(Vector3.ProjectOnPlane((this.transform.position - other.transform.position).normalized, Vector3.up) * repulsionForce, ForceMode.Impulse);
         }
     }
 }
