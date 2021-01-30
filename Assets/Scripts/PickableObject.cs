@@ -7,7 +7,7 @@ public class PickableObject : MonoBehaviour
 {
     public bool notCentered = false;
 
-    private static float repulsionForce = 1f;
+    private static float repulsionForce = 0.75f;
 
     private void Start()
     {

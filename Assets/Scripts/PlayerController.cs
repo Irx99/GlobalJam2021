@@ -91,27 +91,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnCustomMouseClick(InputAction.CallbackContext obj)
     {
-        if(Physics.SphereCast(playerCamera.transform.position, hitDetectionRadious, playerCamera.transform.forward, out hit, hitDetectionDistance))
+        if(objectPicked != null)
         {
-            Debug.DrawLine(playerCamera.transform.position, hit.point, Color.red, 3f);
-
-            if(hit.transform.GetComponent<DestructibleObject>())
+            LaunchPickable();
+        }
+        else
+        {
+            if(Physics.SphereCast(playerCamera.transform.position, hitDetectionRadious, playerCamera.transform.forward, out hit, hitDetectionDistance))
             {
-                hit.transform.GetComponent<DestructibleObject>().Destroy();
-            }
-            else if(hit.transform.GetComponent<PickableObject>())
-            {
-                if(objectPicked == null)
+                if(hit.transform.GetComponent<DestructibleObject>())
                 {
-                    (objectPicked, pickableNotCentered) = hit.transform.GetComponent<PickableObject>().Pick();
-                    objectPicked.transform.parent = pickablePosition.transform;
-                    objectPicked.GetComponent<Rigidbody>().useGravity = false;
-                    objectPicked.GetComponent<Rigidbody>().isKinematic = true;
-                    StartCoroutine(MovePickable(objectPicked, pickablePosition, pickableNotCentered));
+                    hit.transform.GetComponent<DestructibleObject>().Destroy();
                 }
-                else
+                else if(hit.transform.GetComponent<PickableObject>())
                 {
-                    LaunchPickable();
+                    if(objectPicked == null)
+                    {
+                        (objectPicked, pickableNotCentered) = hit.transform.GetComponent<PickableObject>().Pick();
+                        objectPicked.transform.parent = pickablePosition.transform;
+                        objectPicked.GetComponent<Rigidbody>().useGravity = false;
+                        objectPicked.GetComponent<Rigidbody>().isKinematic = true;
+                        StartCoroutine(MovePickable(objectPicked, pickablePosition, pickableNotCentered));
+                    }
                 }
             }
         }
