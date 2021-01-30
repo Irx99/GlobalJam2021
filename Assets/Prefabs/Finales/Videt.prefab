@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f24d2b8271dcb41a1a5b5542260452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notDestroyedMesh: {fileID: 0}
+  notDestroyedMesh: {fileID: 8495765122168762259}
   destroyedMesh: {fileID: 2704167532664423380}
   explosionForce: 50
   explosionRadius: 3
@@ -3068,6 +3068,12 @@ PrefabInstance:
 --- !u!4 &9127905776385783081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 467b8c7b0ad4b7b4bba2d84661ef07af,
+    type: 3}
+  m_PrefabInstance: {fileID: 8729784277833126594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8495765122168762259 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 467b8c7b0ad4b7b4bba2d84661ef07af,
     type: 3}
   m_PrefabInstance: {fileID: 8729784277833126594}
   m_PrefabAsset: {fileID: 0}
