@@ -38,6 +38,7 @@ public class DestructibleVisuals : MonoBehaviour
             {
                 col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, destroyedMesh.transform.position, explosionRadius, explosionUpForce);
                 col.gameObject.AddComponent<PickableObject>();
+                col.gameObject.GetComponent<PickableObject>().SetAsUncentered();
             }
 
             destroyed = true;

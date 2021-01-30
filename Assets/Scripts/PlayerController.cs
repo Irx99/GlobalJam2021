@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 mousePosition;
 
     private GameObject objectPicked;
+    private bool pickableNotCentered;
     private Rigidbody objectPickedRgbd;
     private RaycastHit hit;
 
@@ -102,41 +103,50 @@ public class PlayerController : MonoBehaviour
             {
                 if(objectPicked == null)
                 {
-                    objectPicked = hit.transform.GetComponent<PickableObject>().Pick();
+                    (objectPicked, pickableNotCentered) = hit.transform.GetComponent<PickableObject>().Pick();
                     objectPicked.transform.parent = pickablePosition.transform;
                     objectPicked.GetComponent<Rigidbody>().useGravity = false;
                     objectPicked.GetComponent<Rigidbody>().isKinematic = true;
-                    StartCoroutine(MovePickable(objectPicked));
+                    StartCoroutine(MovePickable(objectPicked, pickablePosition, pickableNotCentered));
+                }
+                else
+                {
+                    LaunchPickable();
                 }
             }
         }
     }
 
-    private IEnumerator MovePickable(GameObject pickableGO)
+    private IEnumerator MovePickable(GameObject objectPicked, Transform pickablePosition, bool PickableNotCentered)
     {
         float startingTime = Time.time;
-        Vector3 startingPosition = pickableGO.transform.position;
+        Vector3 startingPosition = objectPicked.transform.position;
 
         while ((startingTime + pickableTime) > Time.time)
         {
-            pickableGO.transform.position = Vector3.Lerp(startingPosition, pickablePosition.position, pickableCurve.Evaluate(1 - (((startingTime + pickableTime) - Time.time)) / pickableTime));
+            objectPicked.transform.position = Vector3.Lerp(startingPosition, pickablePosition.position + (pickableNotCentered ? (objectPicked.transform.position - objectPicked.GetComponent<Renderer>().bounds.center) : Vector3.zero), pickableCurve.Evaluate(1 - (((startingTime + pickableTime) - Time.time)) / pickableTime));
             yield return new WaitForEndOfFrame();
         }
 
-        pickableGO.transform.position = pickablePosition.position;
+        objectPicked.transform.position = pickablePosition.position + (pickableNotCentered ? (objectPicked.transform.position - objectPicked.GetComponent<Renderer>().bounds.center) : Vector3.zero);
     }
 
     private void OnCustomSecondaryMouseClick(InputAction.CallbackContext obj)
     {
         if (objectPicked != null)
         {
-            objectPickedRgbd = objectPicked.GetComponent<Rigidbody>();
-            objectPickedRgbd.useGravity = true;
-            objectPickedRgbd.isKinematic = false;
-            objectPicked.transform.parent = null;
-            objectPickedRgbd.AddForce(playerCamera.transform.forward * launchForce, ForceMode.Impulse);
-            objectPicked = null;
+            LaunchPickable();
         }
+    }
+
+    private void LaunchPickable()
+    {
+        objectPickedRgbd = objectPicked.GetComponent<Rigidbody>();
+        objectPickedRgbd.useGravity = true;
+        objectPickedRgbd.isKinematic = false;
+        objectPicked.transform.parent = null;
+        objectPickedRgbd.AddForce(playerCamera.transform.forward * launchForce, ForceMode.Impulse);
+        objectPicked = null;
     }
 
     private void Jump(InputAction.CallbackContext obj)
@@ -149,7 +159,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             bufferJumpTime = Time.timeSinceLevelLoad + bufferJumpLenghtTime;
-        }
-        
+        }        
     }
 }

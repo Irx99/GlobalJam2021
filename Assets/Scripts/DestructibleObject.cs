@@ -16,8 +16,8 @@ public class DestructibleObject : MonoBehaviour
     {
         if(this.gameObject.GetComponent<DestructibleVisuals>() != null)
         {
+            this.gameObject.GetComponent<Collider>().enabled = false;
             this.gameObject.GetComponent<DestructibleVisuals>().Destroy();
-            Destroy(this.gameObject.GetComponent<Collider>());
         }
         else
         {

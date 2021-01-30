@@ -5,13 +5,29 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PickableObject : MonoBehaviour
 {
+    public bool notCentered = false;
+    private GameObject emptyParentObject;
+
     private void Start()
     {
         this.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
     }
 
-    public GameObject Pick()
+    public (GameObject, bool) Pick()
     {
-        return this.gameObject;
+        return (this.gameObject, notCentered);
+    }
+
+    public void SetAsUncentered()
+    {
+        notCentered = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "PlayerPush")
+        {
+            this.GetComponent<Rigidbody>().AddForce(Vector3.ProjectOnPlane((this.transform.position - other.transform.position).normalized, Vector3.up) * 1f, ForceMode.Impulse);
+        }
     }
 }
