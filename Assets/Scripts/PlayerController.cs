@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour
     public float velocityForward = 0.1f, velocityRight = 0.1f, gravityForce, jumpForce, mouseSensibility = 0.1f;
     public Camera playerCamera;
 
-    public Vector3 hitDetectionHalfCube = new Vector3(0.5f, 0.5f, 0.5f);
+    public float angleCameraLimit = 80;
+
+    public float hitDetectionRadious = 0.5f;
     public float hitDetectionDistance = 3f;
 
     public Transform pickablePosition;
@@ -24,10 +26,10 @@ public class PlayerController : MonoBehaviour
 
     private float inputHorizontal, inputVertical;
     private Vector2 mousePosition;
-    private RaycastHit hit;
 
     private GameObject objectPicked;
     private Rigidbody objectPickedRgbd;
+    private RaycastHit hit;
 
     private float velocityY;
     private float bufferJumpTime;
@@ -60,8 +62,8 @@ public class PlayerController : MonoBehaviour
         this.transform.Rotate(0, (mousePosition.x) * mouseSensibility, 0);
 
         if(
-            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) > +60 && -mousePosition.y < 0) &&
-            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) < -60 && -mousePosition.y > 0)
+            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) >  angleCameraLimit && -mousePosition.y < 0) &&
+            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) < -angleCameraLimit && -mousePosition.y > 0)
         )
         {
             playerCamera.transform.Rotate((-mousePosition.y) * mouseSensibility, 0, 0);
@@ -88,8 +90,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCustomMouseClick(InputAction.CallbackContext obj)
     {
-        if(Physics.BoxCast(this.transform.position, hitDetectionHalfCube, this.transform.forward, out hit, this.transform.rotation, hitDetectionDistance))
+        if(Physics.SphereCast(playerCamera.transform.position, hitDetectionRadious, playerCamera.transform.forward, out hit, hitDetectionDistance))
         {
+            Debug.DrawLine(playerCamera.transform.position, hit.point, Color.red, 3f);
+
             if(hit.transform.GetComponent<DestructibleObject>())
             {
                 hit.transform.GetComponent<DestructibleObject>().Destroy();

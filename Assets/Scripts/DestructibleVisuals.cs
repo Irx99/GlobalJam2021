@@ -17,6 +17,8 @@ public class DestructibleVisuals : MonoBehaviour
 
     protected List<Collider> _colliders = new List<Collider>();
 
+    private bool destroyed = false;
+
     private void Awake()
     {
         foreach(Transform tr in destroyedMesh.transform)
@@ -25,19 +27,20 @@ public class DestructibleVisuals : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Keyboard.current[Key.Space].wasPressedThisFrame)
-            Destroy();
-    }
     public void Destroy()
     {
-        notDestroyedMesh.SetActive(false);
-        destroyedMesh.SetActive(true);
-        feedbacks.PlayFeedbacks();
-        foreach (Collider col in _colliders)
+        if(!destroyed)
         {
-            col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, destroyedMesh.transform.position, explosionRadius, explosionUpForce);
+            notDestroyedMesh.SetActive(false);
+            destroyedMesh.SetActive(true);
+            feedbacks.PlayFeedbacks();
+            foreach (Collider col in _colliders)
+            {
+                col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, destroyedMesh.transform.position, explosionRadius, explosionUpForce);
+                col.gameObject.AddComponent<PickableObject>();
+            }
+
+            destroyed = true;
         }
     }
 }
