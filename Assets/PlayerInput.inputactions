@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "mouseSecondaryClick",
+                    "type": "Button",
+                    "id": "9882ebee-b6d8-4763-b6c6-82468ea602d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -190,6 +198,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "mouseClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff027022-54ee-44c2-894e-d99807acb1cd",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "mouseSecondaryClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

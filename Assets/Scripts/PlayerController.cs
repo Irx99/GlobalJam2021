@@ -14,19 +14,29 @@ public class PlayerController : MonoBehaviour
     public Vector3 hitDetectionHalfCube = new Vector3(0.5f, 0.5f, 0.5f);
     public float hitDetectionDistance = 3f;
 
+    public Transform pickablePosition;
+    public float pickableTime;
+    public AnimationCurve pickableCurve;
+
     private float inputHorizontal, inputVertical;
     private Vector2 mousePosition;
     private RaycastHit hit;
 
+    private GameObject objectPicked;
+    private Rigidbody objectPickedRgbd;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
         playerInput.actions["mouseClick"].started += OnCustomMouseClick;
+        playerInput.actions["mouseSecondaryClick"].started += OnCustomSecondaryMouseClick;
     }
 
     private void OnDestroy()
     {
         playerInput.actions["mouseClick"].started -= OnCustomMouseClick;
+        playerInput.actions["mouseSecondaryClick"].started -= OnCustomSecondaryMouseClick;
     }
 
     private void Update()
@@ -60,6 +70,44 @@ public class PlayerController : MonoBehaviour
             {
                 hit.transform.GetComponent<DestructibleObject>().Destroy();
             }
+            else if(hit.transform.GetComponent<PickableObject>())
+            {
+                if(objectPicked == null)
+                {
+                    objectPicked = hit.transform.GetComponent<PickableObject>().Pick();
+                    objectPicked.transform.parent = pickablePosition.transform;
+                    objectPicked.GetComponent<Rigidbody>().useGravity = false;
+                    objectPicked.GetComponent<Rigidbody>().isKinematic = true;
+                    StartCoroutine(MovePickable(objectPicked));
+                }
+            }
+        }
+    }
+
+    private IEnumerator MovePickable(GameObject pickableGO)
+    {
+        float startingTime = Time.time;
+        Vector3 startingPosition = pickableGO.transform.position;
+
+        while ((startingTime + pickableTime) > Time.time)
+        {
+            pickableGO.transform.position = Vector3.Lerp(startingPosition, pickablePosition.position, pickableCurve.Evaluate(1 - (((startingTime + pickableTime) - Time.time)) / pickableTime));
+            yield return new WaitForEndOfFrame();
+        }
+
+        pickableGO.transform.position = pickablePosition.position;
+    }
+
+    private void OnCustomSecondaryMouseClick(InputAction.CallbackContext obj)
+    {
+        if (objectPicked != null)
+        {
+            objectPickedRgbd = objectPicked.GetComponent<Rigidbody>();
+            objectPickedRgbd.useGravity = true;
+            objectPickedRgbd.isKinematic = false;
+            objectPicked.transform.parent = null;
+            objectPickedRgbd.AddForce(this.transform.forward * 100f, ForceMode.Impulse);
+            objectPicked = null;
         }
     }
 }
