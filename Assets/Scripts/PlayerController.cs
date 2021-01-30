@@ -8,22 +8,31 @@ public class PlayerController : MonoBehaviour
 {
     public CharacterController characterController;
     public PlayerInput playerInput;
-    public float velocityForward = 0.1f, velocityRight = 0.1f, mouseSensibility = 0.1f;
+    public float velocityForward = 0.1f, velocityRight = 0.1f, gravityForce, jumpForce, mouseSensibility = 0.1f;
     public Camera playerCamera;
 
-    public Vector3 hitDetectionHalfCube = new Vector3(0.5f, 0.5f, 0.5f);
+    public float angleCameraLimit = 80;
+
+    public float hitDetectionRadious = 0.5f;
     public float hitDetectionDistance = 3f;
 
     public Transform pickablePosition;
     public float pickableTime;
     public AnimationCurve pickableCurve;
 
+    public float launchForce = 25f;
+
+    public float bufferJumpLenghtTime = 0.5f;
+
     private float inputHorizontal, inputVertical;
     private Vector2 mousePosition;
-    private RaycastHit hit;
 
     private GameObject objectPicked;
     private Rigidbody objectPickedRgbd;
+    private RaycastHit hit;
+
+    private float velocityY;
+    private float bufferJumpTime;
 
     private void Start()
     {
@@ -31,12 +40,16 @@ public class PlayerController : MonoBehaviour
 
         playerInput.actions["mouseClick"].started += OnCustomMouseClick;
         playerInput.actions["mouseSecondaryClick"].started += OnCustomSecondaryMouseClick;
+
+        playerInput.actions["jump"].started += Jump;
     }
 
     private void OnDestroy()
     {
         playerInput.actions["mouseClick"].started -= OnCustomMouseClick;
         playerInput.actions["mouseSecondaryClick"].started -= OnCustomSecondaryMouseClick;
+
+        playerInput.actions["jump"].started -= Jump;
     }
 
     private void Update()
@@ -49,23 +62,38 @@ public class PlayerController : MonoBehaviour
         this.transform.Rotate(0, (mousePosition.x) * mouseSensibility, 0);
 
         if(
-            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) > +60 && -mousePosition.y < 0) &&
-            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) < -60 && -mousePosition.y > 0)
+            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) >  angleCameraLimit && -mousePosition.y < 0) &&
+            !(Vector3.SignedAngle(playerCamera.transform.forward, this.transform.forward, this.transform.right) < -angleCameraLimit && -mousePosition.y > 0)
         )
         {
             playerCamera.transform.Rotate((-mousePosition.y) * mouseSensibility, 0, 0);
         }   
-    }
 
-    private void FixedUpdate()
-    {
-        characterController.SimpleMove(this.transform.forward * inputVertical * velocityForward + this.transform.right * inputHorizontal * velocityRight);
+        if(characterController.isGrounded)
+        {
+            if (bufferJumpTime > Time.timeSinceLevelLoad)
+            {
+                velocityY = jumpForce;
+                characterController.Move((this.transform.forward * inputVertical * velocityForward + this.transform.right * inputHorizontal * velocityRight + this.transform.up * velocityY) * Time.deltaTime);
+            }
+            else
+            {
+                characterController.SimpleMove((this.transform.forward * inputVertical * velocityForward + this.transform.right * inputHorizontal * velocityRight));
+            }
+        }
+        else
+        {
+            velocityY -= gravityForce * Time.deltaTime;
+            characterController.Move((this.transform.forward * inputVertical * velocityForward + this.transform.right * inputHorizontal * velocityRight + this.transform.up * velocityY) * Time.deltaTime);
+        }
     }
 
     private void OnCustomMouseClick(InputAction.CallbackContext obj)
     {
-        if(Physics.BoxCast(this.transform.position, hitDetectionHalfCube, this.transform.forward, out hit, this.transform.rotation, hitDetectionDistance))
+        if(Physics.SphereCast(playerCamera.transform.position, hitDetectionRadious, playerCamera.transform.forward, out hit, hitDetectionDistance))
         {
+            Debug.DrawLine(playerCamera.transform.position, hit.point, Color.red, 3f);
+
             if(hit.transform.GetComponent<DestructibleObject>())
             {
                 hit.transform.GetComponent<DestructibleObject>().Destroy();
@@ -106,8 +134,22 @@ public class PlayerController : MonoBehaviour
             objectPickedRgbd.useGravity = true;
             objectPickedRgbd.isKinematic = false;
             objectPicked.transform.parent = null;
-            objectPickedRgbd.AddForce(this.transform.forward * 100f, ForceMode.Impulse);
+            objectPickedRgbd.AddForce(playerCamera.transform.forward * launchForce, ForceMode.Impulse);
             objectPicked = null;
         }
+    }
+
+    private void Jump(InputAction.CallbackContext obj)
+    {
+        if(characterController.isGrounded)
+        {
+            velocityY = jumpForce;
+            characterController.Move((this.transform.forward * inputVertical * velocityForward + this.transform.right * inputHorizontal * velocityRight + this.transform.up * velocityY) * Time.deltaTime);
+        }
+        else
+        {
+            bufferJumpTime = Time.timeSinceLevelLoad + bufferJumpLenghtTime;
+        }
+        
     }
 }
