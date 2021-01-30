@@ -2832,19 +2832,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2097567172, guid: fbd8204d27182b343ad730b111849f7b, type: 3}
-      propertyPath: m_Radius
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5856582480908020113, guid: fbd8204d27182b343ad730b111849f7b,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020114, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: m_StepOffset
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5856582480908020142, guid: fbd8204d27182b343ad730b111849f7b,
         type: 3}
@@ -2900,41 +2891,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: jumpForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: launchForce
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: gravityForce
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: velocityRight
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: velocityForward
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: hitDetectionRadious
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856582480908020143, guid: fbd8204d27182b343ad730b111849f7b,
-        type: 3}
-      propertyPath: bufferJumpLenghtTime
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbd8204d27182b343ad730b111849f7b, type: 3}

@@ -28,7 +28,7 @@ public class PickableObject : MonoBehaviour
     {
         if (other.tag == "PlayerPush")
         {
-            this.GetComponent<Rigidbody>().AddForce(Vector3.ProjectOnPlane((this.transform.position - other.transform.position).normalized, Vector3.up) * repulsionForce, ForceMode.Impulse);
+            this.GetComponent<Rigidbody>().AddForce(Vector3.ProjectOnPlane((this.GetComponent<Renderer>().bounds.center - other.transform.position).normalized, Vector3.up) * repulsionForce, ForceMode.Impulse);
         }
     }
 }

@@ -41,7 +41,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.7
+  m_Radius: 2
   m_Height: 2.4
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -213,7 +213,7 @@ MonoBehaviour:
   mouseSensibility: 0.2
   playerCamera: {fileID: 5856582482203539614}
   angleCameraLimit: 80
-  hitDetectionRadious: 0.3
+  hitDetectionRadious: 0.1
   hitDetectionDistance: 6
   pickablePosition: {fileID: 5856582480659203111}
   pickableTime: 0.25
