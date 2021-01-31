@@ -249,7 +249,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-462736
+  m_Name: pb_Mesh31394
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -642,7 +642,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 6e3ab1685d95903469a1c5232cc91575, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4400,6 +4400,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5575498371582982581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575498371748618974, guid: e6b6adaea1a3ff441b5d6684a00319c9,
+        type: 3}
+      propertyPath: m_Shadows.m_Bias
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
       propertyPath: m_RootOrder
@@ -4423,22 +4433,22 @@ PrefabInstance:
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.5850436
       objectReference: {fileID: 0}
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.8110019
       objectReference: {fileID: 0}
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
@@ -4448,7 +4458,7 @@ PrefabInstance:
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 251.612
       objectReference: {fileID: 0}
     - target: {fileID: 5575498372397549581, guid: e6b6adaea1a3ff441b5d6684a00319c9,
         type: 3}
@@ -4459,6 +4469,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lightning_Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575498373076081760, guid: e6b6adaea1a3ff441b5d6684a00319c9,
+        type: 3}
+      propertyPath: m_Shadows.m_Bias
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575498373076081760, guid: e6b6adaea1a3ff441b5d6684a00319c9,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575498373076081760, guid: e6b6adaea1a3ff441b5d6684a00319c9,
+        type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6b6adaea1a3ff441b5d6684a00319c9, type: 3}
