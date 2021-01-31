@@ -26,7 +26,7 @@ public class PickableObject : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "PlayerPush")
+        if (!isPhone && other.tag == "PlayerPush")
         {
             this.GetComponent<Rigidbody>().AddForce(Vector3.ProjectOnPlane(((this.transform.position - (this.GetComponent<Renderer>() != null ? this.GetComponent<Renderer>().bounds.center : this.transform.position) - other.transform.position)).normalized, Vector3.up) * repulsionForce, ForceMode.Impulse);
         }

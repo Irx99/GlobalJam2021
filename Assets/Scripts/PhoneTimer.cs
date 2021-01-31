@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class PhoneTimer : MonoBehaviour
 {
+    public LevelManager levelManager;
+
     public Image timeBar;
     public float levelTime;
     public bool counting;
@@ -12,6 +14,7 @@ public class PhoneTimer : MonoBehaviour
     float timeRemaining;
     float timeBarStartScale;
     Vector3 aux;
+
     private void Awake()
     {
         timeRemaining = levelTime;
@@ -23,7 +26,7 @@ public class PhoneTimer : MonoBehaviour
     {
         if (timeRemaining <= 0)
         {
-            // TODO Game over
+            levelManager.GameOver();
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
@@ -36,5 +39,15 @@ public class PhoneTimer : MonoBehaviour
             timeBar.color = Color.Lerp(Color.red, Color.white, curvaDeTrucarElTiempo.Evaluate(1- timeRemaining / levelTime));
             timeBar.transform.localScale = aux;
         }
+    }
+
+    public void StartTimer()
+    {
+        counting = true;
+    }
+
+    public void StopTheCount()
+    {
+        counting = false;
     }
 }

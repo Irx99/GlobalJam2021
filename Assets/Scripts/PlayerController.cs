@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public LevelManager levelManager;
+    public bool canMove = true;
+
     public CharacterController characterController;
     public PlayerInput playerInput;
     public float velocityForward = 0.1f, velocityRight = 0.1f, gravityForce, jumpForce, mouseSensibility = 0.1f;
@@ -58,8 +61,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        inputHorizontal = playerInput.actions["inputHorizontal"].ReadValue<float>();
-        inputVertical = playerInput.actions["inputVertical"].ReadValue<float>();
+        if(canMove)
+        {
+            inputHorizontal = playerInput.actions["inputHorizontal"].ReadValue<float>();
+            inputVertical = playerInput.actions["inputVertical"].ReadValue<float>();
+        }
+        else
+        {
+            inputHorizontal = 0;
+            inputVertical = 0;
+        }
 
         mousePosition = playerInput.actions["mousePosition"].ReadValue<Vector2>();
 
@@ -94,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCustomMouseClick(InputAction.CallbackContext obj)
     {
-        if(!phonePicked)
+        if(canMove)
         {
             if(objectPicked != null)
             {
@@ -106,8 +117,11 @@ public class PlayerController : MonoBehaviour
                 {
                     if(hit.transform.GetComponent<DestructibleObject>())
                     {
+                        // HEMOS QUITADO EL PUÑETAZO PORQ SINO EL JUEGO VA SOLO DE DAR CLICK HACIA ALANTE
+                        /*
                         handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.PUNCH);
                         hit.transform.GetComponent<DestructibleObject>().Destroy();
+                        */
                     }
                     else if(hit.transform.GetComponent<PickableObject>())
                     {
@@ -142,8 +156,11 @@ public class PlayerController : MonoBehaviour
 
         if(phonePicked)
         {
-            // TODO -> FIN DEL NIVEL
-            while(true)
+            canMove = false;
+
+            levelManager.Win();
+
+            while (true)
             {
                 objectPicked.transform.rotation = Quaternion.LookRotation(playerCamera.transform.position - objectPicked.transform.position, Vector3.Cross(playerCamera.transform.position - objectPicked.transform.position, playerCamera.transform.right).normalized);
                 yield return new WaitForEndOfFrame();
@@ -153,7 +170,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCustomSecondaryMouseClick(InputAction.CallbackContext obj)
     {
-        if (objectPicked != null && !phonePicked)
+        if (objectPicked != null && canMove)
         {
             LaunchPickable();
         }
@@ -182,5 +199,15 @@ public class PlayerController : MonoBehaviour
         {
             bufferJumpTime = Time.timeSinceLevelLoad + bufferJumpLenghtTime;
         }        
+    }
+
+    public void StopMovementInput()
+    {
+        canMove = false;
+    }
+
+    public void AllowMovementInput()
+    {
+        canMove = true;
     }
 }

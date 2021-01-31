@@ -234,6 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d187f9a70cc864e96b48e70993741b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 0}
+  canMove: 1
   characterController: {fileID: 5856582480908020114}
   playerInput: {fileID: 5856582480908020136}
   velocityForward: 10
