@@ -21,11 +21,19 @@ public class HandsAnimatorHandle : MonoBehaviour
         }
         else if (chosenAnim == Anims.THROW)
         {
-            anim.CrossFade("throw", 0.2f, 0);
+            if (Random.Range(0, 20) > 18)
+                anim.CrossFade("throw", 0.2f, 0);
+            else
+                anim.CrossFade("throwNormal", 0.2f, 0);
+
         }
         else if (chosenAnim == Anims.PUNCH)
         {
-            anim.CrossFade("punch", 0.2f, 0);
+            if (Random.Range(0, 20) > 18)
+                anim.CrossFade("punch", 0.2f, 0);
+            else
+                anim.CrossFade("punchNormal", 0.2f, 0);
+
         }
     }
 }
