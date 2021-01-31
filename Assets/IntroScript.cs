@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class IntroScript : MonoBehaviour
 {
+    public bool isIntro = false;
     public Image blackPanel;
     public TextMeshPro txt;
     public GameObject screenQuad;
@@ -15,12 +16,18 @@ public class IntroScript : MonoBehaviour
 
     void Awake()
     {
-        blackPanel.color = new Color(0,0,0,1);
+        if (isIntro)
+            blackPanel.color = new Color(0,0,0,1);
     }
 
-    IEnumerator Start()
+    private void OnEnable()
     {
         blackPanel.CrossFadeAlpha(0, 2f, true);
+        StartCoroutine(IntroCr());
+    }
+
+    IEnumerator IntroCr()
+    {
         yield return new WaitForSeconds(2);
         foreach (string str in dialogues)
         {
