@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
 
     public LoopChange loopChange;
 
+    public Material phoneAfterMaterial;
+
     private float inputHorizontal, inputVertical;
     private Vector2 mousePosition;
 
@@ -141,6 +143,7 @@ public class PlayerController : MonoBehaviour
                                 canMove = false;
                                 objectPicked.transform.GetChild(2).gameObject.SetActive(false);
                                 loopChange.StopSong();
+                                objectPicked.transform.GetChild(1).gameObject.GetComponent<Renderer>().material = phoneAfterMaterial;
                             }
 
                             objectPicked.transform.parent = pickablePosition.transform;

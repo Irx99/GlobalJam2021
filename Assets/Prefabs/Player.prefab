@@ -1552,6 +1552,7 @@ MonoBehaviour:
   bufferJumpLenghtTime: 0.25
   handsAnimatorHandle: {fileID: 5143720767253372795}
   loopChange: {fileID: 1753184269}
+  phoneAfterMaterial: {fileID: 2100000, guid: 3b4a16e5936ec794faa5c04bc32889eb, type: 2}
 --- !u!114 &5856582480908020136
 MonoBehaviour:
   m_ObjectHideFlags: 0
