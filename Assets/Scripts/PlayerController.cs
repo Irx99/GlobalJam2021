@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     public float pickableTime;
     public AnimationCurve pickableCurve;
 
+    public AudioSource launchSource;
+    public AudioClip[] lowHits, midHits, highHits; 
+
     public float launchForce = 25f;
 
     public float bufferJumpLenghtTime = 0.5f;
@@ -178,7 +181,33 @@ public class PlayerController : MonoBehaviour
 
     private void LaunchPickable()
     {
+        CollisionSound aux;
+
         handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.THROW);
+
+        if(objectPicked.GetComponent<Renderer>() != null)
+        {
+            if(objectPicked.GetComponent<Renderer>().bounds.size.magnitude < 2)
+            {
+                aux = objectPicked.AddComponent<CollisionSound>();
+                aux.Setup(launchSource, lowHits, midHits, highHits, CollisionSound.Size.SMALL);
+            }
+            else if(objectPicked.GetComponent<Renderer>().bounds.size.magnitude > 3)
+            {
+                aux = objectPicked.AddComponent<CollisionSound>();
+                aux.Setup(launchSource, lowHits, midHits, highHits, CollisionSound.Size.HUGE);
+            }
+            else
+            {
+                aux = objectPicked.AddComponent<CollisionSound>();
+                aux.Setup(launchSource, lowHits, midHits, highHits, CollisionSound.Size.MEDIUM);
+            }
+        }
+        else
+        {
+            aux = objectPicked.AddComponent<CollisionSound>();
+            aux.Setup(launchSource, lowHits, midHits, highHits, CollisionSound.Size.SMALL);
+        }
 
         objectPickedRgbd = objectPicked.GetComponent<Rigidbody>();
         objectPickedRgbd.useGravity = true;
