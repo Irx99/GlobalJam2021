@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float hitDetectionRadious = 0.5f;
     public float hitDetectionDistance = 3f;
 
-    public Transform pickablePosition;
+    public Transform pickablePosition, pickablePositionPhone;
     public float pickableTime;
     public AnimationCurve pickableCurve;
 
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private GameObject objectPicked;
     private bool pickableNotCentered;
+    private bool phonePicked = false;
     private Rigidbody objectPickedRgbd;
     private RaycastHit hit;
 
@@ -93,30 +94,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnCustomMouseClick(InputAction.CallbackContext obj)
     {
-        if(objectPicked != null)
+        if(!phonePicked)
         {
-            LaunchPickable();
-        }
-        else
-        {
-            if(Physics.SphereCast(playerCamera.transform.position, hitDetectionRadious, playerCamera.transform.forward, out hit, hitDetectionDistance))
+            if(objectPicked != null)
             {
-                if(hit.transform.GetComponent<DestructibleObject>())
+                LaunchPickable();
+            }
+            else
+            {
+                if(Physics.SphereCast(playerCamera.transform.position, hitDetectionRadious, playerCamera.transform.forward, out hit, hitDetectionDistance))
                 {
-                    handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.PUNCH);
-                    hit.transform.GetComponent<DestructibleObject>().Destroy();
-                }
-                else if(hit.transform.GetComponent<PickableObject>())
-                {
-                    if(objectPicked == null)
+                    if(hit.transform.GetComponent<DestructibleObject>())
                     {
-                        handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.GRAB);
+                        handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.PUNCH);
+                        hit.transform.GetComponent<DestructibleObject>().Destroy();
+                    }
+                    else if(hit.transform.GetComponent<PickableObject>())
+                    {
+                        if(objectPicked == null)
+                        {
+                            handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.GRAB);
 
-                        (objectPicked, pickableNotCentered) = hit.transform.GetComponent<PickableObject>().Pick();
-                        objectPicked.transform.parent = pickablePosition.transform;
-                        objectPicked.GetComponent<Rigidbody>().useGravity = false;
-                        objectPicked.GetComponent<Rigidbody>().isKinematic = true;
-                        StartCoroutine(MovePickable(objectPicked, pickablePosition, pickableNotCentered));
+                            (objectPicked, pickableNotCentered, phonePicked) = hit.transform.GetComponent<PickableObject>().Pick();
+                            objectPicked.transform.parent = pickablePosition.transform;
+                            objectPicked.GetComponent<Rigidbody>().useGravity = false;
+                            objectPicked.GetComponent<Rigidbody>().isKinematic = true;
+                            StartCoroutine(MovePickable(objectPicked, pickablePosition, pickableNotCentered));
+                        }
                     }
                 }
             }
@@ -130,16 +134,26 @@ public class PlayerController : MonoBehaviour
 
         while ((startingTime + pickableTime) > Time.time)
         {
-            objectPicked.transform.position = Vector3.Lerp(startingPosition, pickablePosition.position + (pickableNotCentered ? (objectPicked.transform.position - objectPicked.GetComponent<Renderer>().bounds.center) : Vector3.zero), pickableCurve.Evaluate(1 - (((startingTime + pickableTime) - Time.time)) / pickableTime));
+            objectPicked.transform.position = Vector3.Lerp(startingPosition, (phonePicked ? pickablePositionPhone.position : pickablePosition.position) + (pickableNotCentered ? (objectPicked.transform.position - (objectPicked.GetComponent<Renderer>() != null ? objectPicked.GetComponent<Renderer>().bounds.center : objectPicked.transform.position)) : Vector3.zero), pickableCurve.Evaluate(1 - (((startingTime + pickableTime) - Time.time)) / pickableTime));
             yield return new WaitForEndOfFrame();
         }
 
-        objectPicked.transform.position = pickablePosition.position + (pickableNotCentered ? (objectPicked.transform.position - objectPicked.GetComponent<Renderer>().bounds.center) : Vector3.zero);
+        objectPicked.transform.position = (phonePicked ? pickablePositionPhone.position : pickablePosition.position) + (pickableNotCentered ? (objectPicked.transform.position - (objectPicked.GetComponent<Renderer>() != null ? objectPicked.GetComponent<Renderer>().bounds.center : objectPicked.transform.position)) : Vector3.zero);
+
+        if(phonePicked)
+        {
+            // TODO -> FIN DEL NIVEL
+            while(true)
+            {
+                objectPicked.transform.rotation = Quaternion.LookRotation(playerCamera.transform.position - objectPicked.transform.position, Vector3.up);
+                yield return new WaitForEndOfFrame();
+            }
+        }
     }
 
     private void OnCustomSecondaryMouseClick(InputAction.CallbackContext obj)
     {
-        if (objectPicked != null)
+        if (objectPicked != null && !phonePicked)
         {
             LaunchPickable();
         }
