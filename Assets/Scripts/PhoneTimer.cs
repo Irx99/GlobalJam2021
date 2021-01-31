@@ -24,14 +24,17 @@ public class PhoneTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeRemaining <= 0)
-        {
-            levelManager.GameOver();
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
-        }
         if (counting)
         {
+            if (timeRemaining <= 0)
+            {
+                levelManager.GameOver();
+                counting = false;
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            }
+
             timeRemaining -= Time.deltaTime;
 
             aux = timeBar.rectTransform.localScale;
