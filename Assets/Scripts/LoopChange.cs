@@ -22,10 +22,10 @@ public class LoopChange : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(7.93333333333f - 0.49583333333f);
+            yield return new WaitForSeconds(8f - 0.5f);
             changeLoopAudioSource.PlayOneShot(changeClipAudioSource[Random.Range(0, changeClipAudioSource.Length)]);
-            roomSnapshots[Random.Range(0, roomSnapshots.Length)].TransitionTo(0.49583333333f);
-            yield return new WaitForSeconds(0.49583333333f);
+            roomSnapshots[Random.Range(0, roomSnapshots.Length)].TransitionTo(0.5f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
