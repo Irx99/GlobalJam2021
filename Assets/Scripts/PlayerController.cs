@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     public HandsAnimatorHandle handsAnimatorHandle;
 
+    public LoopChange loopChange;
+
     private float inputHorizontal, inputVertical;
     private Vector2 mousePosition;
 
@@ -133,6 +135,14 @@ public class PlayerController : MonoBehaviour
                             handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.GRAB);
 
                             (objectPicked, pickableNotCentered, phonePicked) = hit.transform.GetComponent<PickableObject>().Pick();
+
+                            if (phonePicked)
+                            {
+                                canMove = false;
+                                objectPicked.transform.GetChild(2).gameObject.SetActive(false);
+                                loopChange.StopSong();
+                            }
+
                             objectPicked.transform.parent = pickablePosition.transform;
                             objectPicked.GetComponent<Rigidbody>().useGravity = false;
                             objectPicked.GetComponent<Rigidbody>().isKinematic = true;
@@ -159,8 +169,6 @@ public class PlayerController : MonoBehaviour
 
         if(phonePicked)
         {
-            canMove = false;
-
             levelManager.Win();
 
             while (true)
