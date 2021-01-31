@@ -146,7 +146,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25309872}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
@@ -194,6 +194,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2130548991}
     m_Modifications:
+    - target: {fileID: 4206304658914531864, guid: c53691b06ef191047a378e16208ba4bb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5142978163452708341, guid: c53691b06ef191047a378e16208ba4bb,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -927,6 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b398e93931f1c2489f24cd8f3e9c853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isIntro: 0
   blackPanel: {fileID: 326109459}
   txt: {fileID: 141568560}
   screenQuad: {fileID: 911557893}
@@ -936,7 +942,7 @@ MonoBehaviour:
   - We'll call you in a few days
   - to tell you if the job is yours.
   - '*BOOP*'
-  nextSceneName: 
+  nextSceneName: Scenes/_Nivel_1
 --- !u!114 &141568560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,16 +1087,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141568558}
-  m_LocalRotation: {x: -0, y: 0.38268352, z: -0, w: -0.9238795}
-  m_LocalPosition: {x: 0, y: 0, z: -55.95}
-  m_LocalScale: {x: 0.27937, y: 0.27937, z: 0.27937}
+  m_LocalRotation: {x: -0, y: 0.25881937, z: -0, w: -0.9659258}
+  m_LocalPosition: {x: 0, y: 0, z: -60.3}
+  m_LocalScale: {x: 0.14221372, y: 0.14221372, z: 0.14221372}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 315, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 330, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 47.43, y: 4.05}
+  m_AnchoredPosition: {x: 49.82, y: 5.02}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &152283841
@@ -2155,7 +2161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &326109459
@@ -2171,7 +2177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2205,7 +2211,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e0d5928d392211248b805d6293524490,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e0d5928d392211248b805d6293524490,
         type: 3}
@@ -2461,24 +2467,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 98064685}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &911557895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911557893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b398e93931f1c2489f24cd8f3e9c853, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blackPanel: {fileID: 0}
-  txt: {fileID: 0}
-  screenQuad: {fileID: 0}
-  charsPerSecond: 10
-  dialogues: []
-  nextSceneName: 
 --- !u!1001 &1131466557
 PrefabInstance:
   m_ObjectHideFlags: 0

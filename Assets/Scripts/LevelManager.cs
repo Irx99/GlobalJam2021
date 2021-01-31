@@ -28,6 +28,9 @@ public class LevelManager : MonoBehaviour
         // Sistema patentado de esperar a que pasen cosas de adri
         // Si quereis hace una espera con bool es asi -> yield return new WaitUntil(() => bool)
         // "Pink Diamond" esta hecho con esto, Mauro deberia tener acceso al git
+
+        introText.text = "A few days later...";
+        yield return new WaitForSeconds(2);
         blackMomento.CrossFadeAlpha(0, 1f, true);
         yield return new WaitForSeconds(0.4f);
         introText.text = "3";
