@@ -1310,7 +1310,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5856582480908020113}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1592,7 +1592,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 100
   orthographic: 0
@@ -1639,18 +1639,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.37192434
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.37192434
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.37192434
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.691
+      value: -0.253
       objectReference: {fileID: 0}
     - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.593
+      value: 0.261
       objectReference: {fileID: 0}
     - target: {fileID: 2120976455802543299, guid: bed0a6606af07394f9055d5c657421f3,
         type: 3}
