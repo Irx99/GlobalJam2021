@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
             // TODO -> FIN DEL NIVEL
             while(true)
             {
-                objectPicked.transform.rotation = Quaternion.LookRotation(playerCamera.transform.position - objectPicked.transform.position, Vector3.up);
+                objectPicked.transform.rotation = Quaternion.LookRotation(playerCamera.transform.position - objectPicked.transform.position, Vector3.Cross(playerCamera.transform.position - objectPicked.transform.position, playerCamera.transform.right).normalized);
                 yield return new WaitForEndOfFrame();
             }
         }
