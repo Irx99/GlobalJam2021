@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     public float bufferJumpLenghtTime = 0.5f;
 
+    public HandsAnimatorHandle handsAnimatorHandle;
+
     private float inputHorizontal, inputVertical;
     private Vector2 mousePosition;
 
@@ -101,12 +103,15 @@ public class PlayerController : MonoBehaviour
             {
                 if(hit.transform.GetComponent<DestructibleObject>())
                 {
+                    handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.PUNCH);
                     hit.transform.GetComponent<DestructibleObject>().Destroy();
                 }
                 else if(hit.transform.GetComponent<PickableObject>())
                 {
                     if(objectPicked == null)
                     {
+                        handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.GRAB);
+
                         (objectPicked, pickableNotCentered) = hit.transform.GetComponent<PickableObject>().Pick();
                         objectPicked.transform.parent = pickablePosition.transform;
                         objectPicked.GetComponent<Rigidbody>().useGravity = false;
@@ -142,6 +147,8 @@ public class PlayerController : MonoBehaviour
 
     private void LaunchPickable()
     {
+        handsAnimatorHandle.PlayAnimation(HandsAnimatorHandle.Anims.THROW);
+
         objectPickedRgbd = objectPicked.GetComponent<Rigidbody>();
         objectPickedRgbd.useGravity = true;
         objectPickedRgbd.isKinematic = false;
